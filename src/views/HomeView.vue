@@ -1,8 +1,7 @@
 <template>
   <div>
-    这是home页面
-    <van-button type="primary">主要按钮</van-button>
-    <van-stepper v-model="value" />
+    <van-search v-model="searchValue" shape="round" disabled placeholder="请输入搜索关键词" />
+    <p>11111</p>
   </div>
 </template>
 
@@ -14,7 +13,7 @@ export default {
   name: 'home',
   data(){
     return{
-      value:1
+      searchValue:''
     }
   }
 }

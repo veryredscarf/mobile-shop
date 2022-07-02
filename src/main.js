@@ -7,9 +7,14 @@ import store from './store/index'
 import 'reset-css'   // 安装全局自动清除样式
 
 
-import { Button,Stepper,Search,SwipeItem,Swipe,Lazyload } from 'vant';
+import { Button,Stepper,Search,SwipeItem,Swipe,Lazyload,Icon,Tag,List,Cell} from 'vant';
 
 
+
+Vue.use(Cell);
+Vue.use(List);
+Vue.use(Tag);
+Vue.use(Icon);
 
 Vue.use(Lazyload);
 

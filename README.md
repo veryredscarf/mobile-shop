@@ -18,6 +18,14 @@ npm run build
 ```
 reset-css 用于清除css默认的样式；vant2  适合vue2的vantUI框架
 ```
+### 接口地址
+```
+http://520it.com:8001/
+```
+### 接口文档
+```
+http://520it.com:8001/
+```
 
 
 ### Customize configuration

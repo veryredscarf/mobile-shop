@@ -16,8 +16,9 @@
 
 
 
-    <history-hot v-if="blockShow==1" :historyList = "historyList" :hotKeywordList = "hotKeywordList"></history-hot>
-    <search-list v-else-if="blockShow==2" :searchValueList = "searchValueList"></search-list>
+    <history-hot v-if="blockShow==1" :historyList = "historyList" :hotKeywordList = "hotKeywordList" @tagClick ="listenTagClick"></history-hot>
+    <search-list v-else-if="blockShow==2" :searchValueList = "searchValueList" @cellClick = "listenCellClick"></search-list>
+    <search-products v-else :goodsList ="goodsList" :filterCategory = "filterCategory" @priceChange ="listenPriceChange" @categoryChange = "listenCateGoryChange"></search-products>
 
   </div>
 </template>
@@ -25,7 +26,8 @@
 
 import HistoryHot from "@/components/HistoryHot.vue"
 import SearchList from "@/components/SearchList.vue"
-import {GetSearchList,GetSearchInfoData} from "@/request/api"
+import SearchProducts from "@/components/SearchProducts.vue"
+import {GetSearchList,GetSearchInfoData,GetSearchGoodData} from "@/request/api"
 
 export default {
   data(){
@@ -39,11 +41,17 @@ export default {
       historyList:[],  // 表示历史数据
       hotKeywordList:[],  // 表示·热门搜索
       searchValueList:[], // 搜索提示，实时数据
+      filterCategory:[], // 搜索产品内容的分类信息
+      goodsList:[], // 搜索产品内容的商品列表
+      order:'desc',  // 用于接受子组件传来的数据，表示价格的排序方式  ,默认是从低到高
+      categoryId:null,  // 用于接收分类的ID，从而获取对应分类的数据
+      sort:'', // 用于接收子组件传来的时某一分类id还是价格排序的方式信息price， 默认的搜索方式是id
     }
   },
   components:{
     HistoryHot,
-    SearchList
+    SearchList,
+    SearchProducts
 },
   created(){
     GetSearchList().then(res=>{
@@ -55,26 +63,73 @@ export default {
     })
   },
   methods:{
+    // 子传父事件监听,检测类型变化
+    listenCateGoryChange(value){
+      console.log(value);
+      // 更改id 
+      this.categoryId = value
+      this.sort = "id"
+      // 发送商品请求
+      this.onSearch(this.searchValue)
+    },
+    // 子传父事件监听,检测价格排序变化
+    listenPriceChange(value){
+      this.order = value
+      this.sort = 'price'
+      this.onSearch(this.searchValue)
+    },
+    // 监听子组件热门搜索，以及历史搜索标签点击事件
+    listenTagClick(val){
+      // 并且将内容赋值给搜索框中的内容
+      this.searchValue = val
+      this.onSearch(val)
+    },
+    // 监听子组件搜索列表点击事件，val表示子组件传来的数据
+    listenCellClick(val){
+      this.listenTagClick(val)
+    },
+
+
+
     // onsearch在用户回车搜索的时候触发，val就是用户输入的值
     onSearch(val){
-      console.log(val);
+      this.blockShow = 3
+
+      let requestInfo = {
+        keyword:val,
+        page:1,
+        size:10,
+        order:this.order,
+        categoryId : this.categoryId,
+        sort:this.sort
+      } 
+
+      GetSearchGoodData(requestInfo).then(res=>{
+        let {filterCategory,goodsList} = res.data
+        this.goodsList = goodsList
+
+        // 由于后端传来的数据与UI组件需要的字段数据不一致，因此需要对数据在获取时进行处理
+        // 采用深拷贝的方法
+        let newArr  = JSON.parse(JSON.stringify(filterCategory).replace(/name/g,'text').replace(/id/g,'value'))
+        this.filterCategory = newArr
+      })
     },
     onCancel(){
       this.searchValue = ''
       this.$router.go(-1)
     },
     onInput(val){
-      if(!val) return
       this.blockShow =2
       GetSearchInfoData({keyword:val}).then(res=>{
-        console.log(res);
         this.searchValueList = res.data
+        console.log("wahahhah",this.searchValueList);
 
       })
     },
     // 定义清除搜索框数据事件
     onClear(){
-     
+      this.searchValue = ''
+    //  this.searchValueList = this.hotKeywordList
     }
 
   }
@@ -87,6 +142,7 @@ export default {
   position: absolute;
  
   top: 0;
+  z-index: 2;
   width: 100%;
   height: 100%;
   background-color: #efefef;

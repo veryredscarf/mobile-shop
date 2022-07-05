@@ -30,4 +30,15 @@ export  const GetSearchInfoData= (params) => $http.get(`/search/helper`,{params}
  * 
  */
 
+// 获取搜索商品的数据
+export  const GetSearchGoodData= (params) => $http.get(`/goods/list`,{params}) 
 
+
+// 设置清除历史搜索记录接口
+export  const clearHistoryData= () => $http.get(`/search/clearhistory`) 
+
+
+// 封装登录请求
+export const GoLogin = params => $http.post("/auth/loginByWeb",params)
+// 封装获取商品信息请求
+export const GetGoodInfo = params => $http.get("/goods/detail",{params})

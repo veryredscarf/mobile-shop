@@ -4,7 +4,7 @@
 
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(item, index) in images" :key="index">
-        <img v-lazy="item.image_url" width="100%"  />
+        <img v-lazy="item.image_url" width="100%" height="200px" />
       </van-swipe-item>
     </van-swipe>
 
@@ -56,6 +56,7 @@ export default {
   // 过渡结束后的样式
    right: 0;
 }
+
 
 
 </style>

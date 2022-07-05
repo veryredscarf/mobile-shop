@@ -5,7 +5,7 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-cell v-for="(item,index) in searchValueList" :key="index" :title="item" />
+      <van-cell @click="cellClick(item)" v-for="(item,index) in searchValueList" :key="index" :title="item" />
     </van-list>
   </div>
 </template>
@@ -19,6 +19,10 @@ export default {
   props:["searchValueList"],
   methods:{
     onLoad(){
+    },
+    // 搜索内容列表点击事件
+    cellClick(val){
+      this.$emit("cellClick",val)
     }
   }
 }

@@ -35,6 +35,7 @@ intsance.interceptors.request.use(config =>{
 //                 也可以在数据请求失败时，可以弹出错误消息
 intsance.interceptors.response.use(res=>{
   const data = res.data
+  console.log(data);
   if( data.errno !=0){
     // 表示请求失败
     Notify({ type: 'danger', message:`${data.errmsg?data.errmsg:'信息错误'}`});

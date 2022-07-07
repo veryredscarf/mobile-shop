@@ -7,8 +7,9 @@ import 'reset-css'   // 安装全局自动清除样式
 
 
 import { Button,Stepper,Search,SwipeItem,Swipe,Lazyload,Icon,Tag,List,Cell, DropdownMenu, DropdownItem,Empty,Toast, Tabbar, TabbarItem,
-Col, Row,Grid, GridItem,Form,Field,Divider
+Col, Row,Grid, GridItem,Form,Field,Divider,GoodsAction, GoodsActionIcon, GoodsActionButton,Sku, Checkbox, CheckboxGroup,Card,SubmitBar
 } from 'vant';
+
 
 // 定义全局过滤器，对金钱进行转换
 Vue.filter("changeRMB",val=>{    // changeRMB表示过滤器名字
@@ -17,8 +18,17 @@ Vue.filter("changeRMB",val=>{    // changeRMB表示过滤器名字
 })
 
 
-Vue.use(Divider);
 
+
+Vue.use(SubmitBar);
+Vue.use(Card);
+Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
+Vue.use(Sku);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);
+Vue.use(Divider);
 Vue.use(Field);
 Vue.use(Form);
 Vue.use(Grid);

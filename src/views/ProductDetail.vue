@@ -14,7 +14,7 @@
       <div class="good-brief">{{info.goods_brief}}</div>
       <div class="retail-price">{{info.retail_price|changeRMB}}</div>
     </div>
-    <van-cell title="展示弹出层" is-link />
+    <van-cell title="展示弹出层" is-link  @click="isSkuShow= true"/>
     <!-- 商品参数层 -->
     <div class="attribute">
       <h3>商品参数</h3>
@@ -56,7 +56,18 @@
       <product  :goodsList="goodsList"></product>
     </div>
 
+      <!-- 商品sku组件 -->
+    <van-sku
+      v-model="isSkuShow"
+      :sku="sku"
+      :goods="goods"
+      :hide-stock="sku.hide_stock"
+      ref='sku'
+    />
 
+
+    <!-- 购物车banner-加入购物车 -->
+    <AppGoodCart @handleCartClick="listenHandleCartClick" :cartGoodsCount="cartGoodsCount"></AppGoodCart>
 
 
 
@@ -67,8 +78,9 @@
 </template>
 <script>
 import product from "@/components/product.vue"
-import {GetGoodInfo} from "@/request/api"
+import {GetGoodInfo,GetRelatedGoodInfo,GetCartInfo,addPutCart} from "@/request/api"
 import CouponTip from "@/components/CouponTip.vue"
+import AppGoodCart from '@/components/AppGoodCart.vue'
 export default {
   data(){
     return {
@@ -82,13 +94,37 @@ export default {
       goods_desc:'',
       // 配置常见问题信息
       issue:[],
-      goodsList:[]
+      goodsList:[],
+
+      // 商品sku组件是否显示
+      isSkuShow:false,
+      // 商品sku信息
+      sku:{
+        tree:[],
+        // 库存信息
+        hide_stock:false,
+        price:'',  // 默认价格，单位元
+        stock_num:227  // 商品总库存
+      },
+      // 商品的图片缩略图
+      goods:{
+        picture:""
+      },
+
+      //购物车数量信息
+      cartGoodsCount:0 ,
+      // 定义加入购物车数据信息,在往后端发送处理加入购物车的请求中需要
+      productList:[]
+
+
+
 
     }
   },
   components:{
     CouponTip,
-    product
+    product,
+    AppGoodCart
   },
 
   created(){
@@ -98,15 +134,72 @@ export default {
     .then(res=>{
       this.images = res.data.gallery
       console.log(res);
-      let {info,attribute,issue} = res.data  // 采用es6的语法来解构对象
+      let {info,attribute,issue,productList} = res.data  // 采用es6的语法来解构对象
       this.info = info
       this.attribute = attribute
       this.goods_desc = info.goods_desc
       this.issue = issue
-      console.log(this.issue);
-      // this.goodsList = 
+
+      this.productList = productList
+
+
+      // 把获取到商品数据添加给sku数据中
+      this.goods.picture = info.list_pic_url
+      this.sku.price = info.retail_price
+      this.sku.stock_num = info.goods_number
+
+
     })
 
+// 获取相关产品的方法
+    GetRelatedGoodInfo(id)
+    .then(res=>{
+      this.goodsList = res.data.goodsList
+    })
+
+    // 获取购物车商品总数量的方法
+    GetCartInfo()
+    .then(res=>{
+      console.log(res);
+      this.cartGoodsCount = res.data.cartTotal.goodsCount
+    })
+
+  },
+
+  methods:{
+   
+    // 监听来自子组件传来的数据值
+    listenHandleCartClick(){
+      // 如果sku组件显示，则把商品加入到购物车
+      // 如果sku组件没有显示，则显示sku组件
+      if(this.isSkuShow){
+
+      // 根据vantUI组建的效果，可以通过获取组件实例的方式，从而调用实例对象的getSkuData方法,来获取到弹出层组件实例中的商品数量数据
+      console.log(this.$refs.sku.getSkuData().selectedNum);
+      // 并向后端发送加入购物车数据，详情可以看接口文档http://xiaoyaoji.cn/project/1Ve70KqViGf/1VeUOSmFgYK
+        addPutCart({
+          goodsId:this.$route.query.id,
+          productId:String(this.productList[0].id),
+          number:this.$refs.sku.getSkuData().selectedNum
+        }).then(res =>{
+
+          console.log(res);
+          // 根据返回数据并且重新把数据进行渲染
+          this.cartGoodsCount = res.data.cartTotal.goodsCount
+          this.$toast.success("加入购物车成功")
+
+          // 并且跳转到哦购物车页面
+          setTimeout(()=>{
+            this.$router.push("/cart")
+          },1000)
+
+        })
+
+
+      }else{
+        this.isSkuShow = true
+      }
+    }
   }
 }
 </script>
@@ -130,7 +223,7 @@ export default {
   }
   .attribute{
     background-color: #fff;
-    margin-top: .2rem;
+    margin-top: .1rem;
     padding: .1rem .16rem;
     h3{
       font-size: 0.16rem;

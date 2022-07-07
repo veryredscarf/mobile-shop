@@ -50,6 +50,16 @@ http://520it.com:8001/
     activeNum用于帮助tabbar切换，
     tabIsShow用于判断tarbar在某些路由中是否显示
 ```
+### 购物车全选的判断：
+```
+核心：通过计算属性来判断：（当一个值收到另外一个值的影响时，便用计算属性来处理）
+    方法1：
+        通过购物车默认数据长度cartGoodList，以及result数组收集被选中的按钮属性作比较，如果相等，表示全选，如果不等表示非全选，全选按钮值就为false
+    方法2：
+        通过后端返回的商品总数，和返选中商品总数作比较
+
+    tabIsShow用于判断tarbar在某些路由中是否显示
+```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

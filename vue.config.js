@@ -10,7 +10,7 @@
 
 module.exports={
   devServer:{
-    port:5000  // 配置端口
+    port:5000,  // 配置端口
   },
 }
 

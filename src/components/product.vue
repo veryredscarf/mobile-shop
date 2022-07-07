@@ -18,12 +18,41 @@ export default {
   },
 
   props:["goodsList"],
+  mounted(){
+    // window.addEventListener("scroll", this.handleScroll, true);
+    // this.toTop()
+  },
   methods:{
     GoodClick(id){
       console.log(id);
       this.$router.push(`/goodDetail?id=${id}`)
-    }
-  }
+
+      // 这种做法的目的是为了能够从商品详情页面中的样式进行跳出重新加载新的数据进入商品详情页，设定延时让页面进行刷新操作  并且让页面刷新
+      setTimeout(()=>{
+        this.$router.go(0)
+        window.scrollTo(0,0)  // 增加用户体验，页面刷新后，自动回滚到页面顶部
+      },10)
+      
+    },
+    //  handleScroll(e) {
+    //   let scrolltop = e.target.scrollTop;
+    //   scrolltop > 30 ? (this.gotop = true) : (this.gotop = false);
+    // },
+    // toTop() {
+    //   console.log("wwww");
+    //   let top = document.documentElement.scrollTop ||
+    //   document.body.scrollTop;
+    //   // 实现滚动效果
+    //   const timeTop = setInterval(() => {
+    //   document.body.scrollTop = document.documentElement.scrollTop =
+    //   top -= 50;
+    //   if (top <= 0) {
+    //   clearInterval(timeTop);
+    //   }
+    //   }, 10);
+    //   },
+  },
+  
 }
 </script>
 

@@ -1,12 +1,12 @@
 import $http from './request'
 
-// 定义获取首页信息
+// 获取首页信息方法
 export  const GetHomeList = () => $http.get("/index/index") 
 
-// 获取搜索框热门，历史等信息
+// 获取搜索框热门，历史等信息方法
 export  const GetSearchList = () => $http.get("/search/index") 
 
-// 获取搜索关键字信息返回的数据
+// 获取搜索关键字信息返回的数据方法
 export  const GetSearchInfoData= (params) => $http.get(`/search/helper`,{params}) 
 
 
@@ -30,15 +30,39 @@ export  const GetSearchInfoData= (params) => $http.get(`/search/helper`,{params}
  * 
  */
 
-// 获取搜索商品的数据
+// 获取搜索商品的数据方法
 export  const GetSearchGoodData= (params) => $http.get(`/goods/list`,{params}) 
 
 
-// 设置清除历史搜索记录接口
+// 设置清除历史搜索记录接口方法
 export  const clearHistoryData= () => $http.get(`/search/clearhistory`) 
 
 
-// 封装登录请求
+// 封装登录请求方法
 export const GoLogin = params => $http.post("/auth/loginByWeb",params)
-// 封装获取商品信息请求
+
+// 获取商品信息请求方法
 export const GetGoodInfo = params => $http.get("/goods/detail",{params})
+
+// 获取根据某商品id获取相关产品推荐数据请求方法
+export const GetRelatedGoodInfo = params => $http.get("/goods/related",{params})
+
+
+// 获取购物拦产品数量信息方法
+export const GetCartInfo = () => $http.get("/cart/goodscount")
+
+
+// 商品加入购物车的方法
+export const addPutCart = params => $http.post("/cart/add",params)
+
+// 获取购物车所有商品信息的方法
+export const GetCartGoodsList = () => $http.get("/cart/index")
+
+// 设置购物车商品切换选中状态的方法
+
+// 请求的目的：告诉后端我们改变了那些值，后端接受值之后，返回给我们一个完整的页面数据，只需要将数据重新渲染在页面上即可
+export const ChangeCartGoodsList = params => $http.post("/cart/checked",params)
+
+
+
+

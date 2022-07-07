@@ -63,6 +63,17 @@ export const GetCartGoodsList = () => $http.get("/cart/index")
 // 请求的目的：告诉后端我们改变了那些值，后端接受值之后，返回给我们一个完整的页面数据，只需要将数据重新渲染在页面上即可
 export const ChangeCartGoodsList = params => $http.post("/cart/checked",params)
 
+// 购物车步进器点击方法
+export const StepperChangeCartGood = params => $http.post("/cart/update",params)
+
+// 购物车商品删除方法
+export const DeleteGood = params => $http.post("/cart/delete",params)
 
 
+// 获取分类页面数据方法
+export const GetCategoryList = ()=>$http.get("/catalog/index")
+
+
+// 获取当前分类页面数据方法
+export const GetCurrentCategoryList = params =>$http.get("/catalog/current",{params})
 

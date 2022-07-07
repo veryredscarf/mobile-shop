@@ -26,6 +26,10 @@ switch (config.url) {
     checkToken()
   case "/cart/checked" :
     checkToken()
+  case "/cart/update" :
+    checkToken()
+  case "/cart/delete" :
+    checkToken()
   default:
     return config
 }

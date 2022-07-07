@@ -2,34 +2,62 @@
   <div>
     <CouponTip></CouponTip>
 
-    <van-checkbox-group v-model="result">
+    <van-checkbox-group v-model="result"  :disabled='isStepperEdting'>
+
+        <!-- 内容区 商品卡片 -->
       <van-checkbox :name="item.id" checked-color="#ee0a24" v-for="item in cartGoodList" :key="item.id" 
         @click="changeCheck(item)"
         >
-        <van-card
-          :num="item.number"
-          :price="item.market_price"
-          :title="item.goods_name"
-          :thumb="item.list_pic_url"
-        />
+        <!-- 滑动删除商品卡片盒子 -->
+        <van-swipe-cell>
+            <van-card
+              :num="item.number"
+              :price="item.market_price"
+              :title="item.goods_name"
+              :thumb="item.list_pic_url"
+            />
+            <van-stepper v-model="item.number" v-show="isStepperEdting" @change="stepperClick(item)" @overlimit="mixDisabledClick"  />
+
+          <template #right>
+            <van-button square type="danger" text="删除"  @click="deleteGood(item.product_id)"/>
+          </template>
+        </van-swipe-cell>
+        <!-- 滑动删除商品卡片盒子 结束 -->
+
       </van-checkbox>
+      <!-- 内容区 商品卡片 结束-->
+
     </van-checkbox-group>
 
+
+
+    <!-- 底部提交按钮 -->
     <van-submit-bar :price="cartTotal.checkedGoodsAmount*100" button-text="提交订单" @submit="onSubmit">
-      <van-checkbox v-model="checkAll"  checked-color="#ee0a24">全选</van-checkbox>
+      <van-checkbox v-model="checkAll"  checked-color="#ee0a24" :disabled='isStepperEdting'>全选</van-checkbox>
       <template #tip>
-        累计共<strong>{{cartTotal.goodsCount}}</strong>件商品，可点击<van-button type="primary" size="small" @click="onClickEditAddress">编辑</van-button>按钮进行商品数量修改
+        累计共<strong>{{cartTotal.goodsCount}}</strong>件商品，可点击
+        <van-button :type="isStepperEdting?'danger':'primary'" 
+                    size="small" 
+                    @click="onClickEditAddress">{{isStepperEdting?'完成编辑':'编辑'}}
+        </van-button>按钮进行商品数量修改
       </template>
     </van-submit-bar>
 
   </div>
 </template>
 <script>
-import {GetCartGoodsList, ChangeCartGoodsList} from "@/request/api"
+import {GetCartGoodsList, ChangeCartGoodsList,StepperChangeCartGood,DeleteGood} from "@/request/api"
 import CouponTip from '@/components/CouponTip.vue'
+import { Notify } from 'vant';
 export default {
   data(){
     return {
+      // 步进器，数据控制
+      value:1,
+      // 步进器组件是否编辑
+      isStepperEdting:false,
+
+
       // 展示选中商品元素数组，数组值是UI组件中的name值
       result: [],
 
@@ -48,6 +76,9 @@ export default {
         return this.result.length==this.cartGoodList.length
       },
       set(value){
+
+      // 复选框事件，需要判断编辑按钮是否为激活状态，如果按钮是激活状态则把底部的全选复选框的事件屏蔽掉，不做任何处理
+      if(this.isStepperEdting) return
 
         // 获取所有商品的id,由于后端在处理多个商品时，需要的返回的是一个字符串，其中用','隔开每个商品
         let arr = []
@@ -91,6 +122,13 @@ export default {
     },
     // 商品选中切换事件
     changeCheck(checkGood){
+
+
+      // 复选框事件，需要判断编辑按钮是否为激活状态，如果按钮是激活状态则把商品列表复选框的事件屏蔽掉，不做任何处理
+      if(this.isStepperEdting) return
+
+
+
       ChangeCartGoodsList({
         // 表示是否选中
         isChecked:checkGood.checked ==0?1:0,
@@ -102,10 +140,39 @@ export default {
       })
     },
     onSubmit(){
-      console.log("111");
+      this.$toast.fail("功能暂未开放")
     },
     onClickEditAddress(){
-      console.log("111111");
+      this.isStepperEdting = !this.isStepperEdting
+    },
+    // 步进器商品数量发生变化时，需要发送请求给后端,把商品对象参数传过来
+    stepperClick(item){
+      console.log(item);
+      // 发送请求
+      StepperChangeCartGood({
+        goodsId:item.goods_id,
+        id:item.id,
+        number:item.number,
+        productId:item.product_id
+      }).then(res=>{
+        console.log(res);
+        // 更新购物车数据
+        this.totalFn(res.data)
+      })
+    },
+    // 当步进器点击不能点击按钮是触发（也就是商品数量最少时触发）
+    mixDisabledClick(){
+      Notify({ type: 'danger', message: '数量不能为0' });
+    },
+    // 删除商品方法
+    deleteGood(goodId){
+      console.log(goodId);
+      DeleteGood({
+        productIds:goodId.toString()
+      }).then((res)=>{
+      Notify({ type: 'primary', message: '删除成功' });
+      this.totalFn(res.data)
+      })
     }
   }
 }
@@ -136,5 +203,10 @@ export default {
       display: flex;
     align-items: center;
   }
-
+  .van-stepper{
+    text-align: right;
+  }
+.van-button--square{
+  height: 100%;
+}
 </style>

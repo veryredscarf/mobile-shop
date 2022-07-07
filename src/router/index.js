@@ -2,6 +2,7 @@ import { Toast } from 'vant';
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import Category from '../views/Category.vue'
 
 // 改造push方法  在使用vueRouter之前,在跳转同一路由时不会报错
 const originPlush = VueRouter.prototype.push;
@@ -16,7 +17,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect:'/home '
+    redirect:'/home'
   },
   {
     path: '/home',
@@ -54,7 +55,17 @@ const routes = [
       activeNum:2,
       tabIsShow:true
     },
-    component: ()=> import('../views/Category.vue'),
+    component: Category,
+    children:[
+      {
+        path: 'searchPopup',  // 也可以采用这种写法   path: '/category/searchPopup',  跳转时的路由一定要正确：$router.push('/category/searchPopup')"
+        name: 'searchPopup',
+        meta:{
+          tabIsShow:false
+        },
+        component: ()=> import('../views/SearchPopup.vue'),
+      }
+    ]
   },
   {
     path: '/cart',  // 也可以采用这种写法   path: '/home/searchPopup',  跳转时的路由一定要正确：$router.push('/home/searchPopup')"

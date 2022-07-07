@@ -117,6 +117,7 @@ export default {
     onCancel(){
       this.searchValue = ''
       this.$router.go(-1)
+      this.$store.commit("changePopupShadow",false)
     },
     onInput(val){
       this.blockShow =2

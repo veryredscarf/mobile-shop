@@ -2,7 +2,13 @@
   <div class="products">
     <ul>
       <li v-for="item in goodsList" :key="item.id" @click="GoodClick(item.id)">
-        <img :src="item.list_pic_url" alt="图片" style="display:block;width: 1.7rem" >
+
+      <van-image :src="item.list_pic_url" style="display:block;width: 100%">
+        <template v-slot:loading>
+          <van-loading type="spinner" size="30"  color="blue"/>
+        </template>
+      </van-image>
+
         <div class="van-ellipsis">{{item.name}}</div>
           <div class="price">{{item.retail_price | changeRMB}}</div>
       </li>

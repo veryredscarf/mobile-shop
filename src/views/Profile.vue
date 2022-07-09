@@ -12,10 +12,18 @@
 
 
     <van-grid :column-num="3" square>
-      <van-grid-item icon="photo-o" text="文字" />
-      <van-grid-item icon="photo-o" text="文字" />
-      <van-grid-item icon="photo-o" text="文字" />
-      <van-grid-item icon="photo-o" text="文字" />
+      
+      <van-grid-item @click="itemClick" icon="label-o" text="订单" />
+      <van-grid-item @click="itemClick" icon="bill-o" text="优惠券" />
+      <van-grid-item @click="itemClick" icon="goods-collect-o" text="礼品卡" />
+      <van-grid-item @click="itemClick" icon="location-o" text="我的收藏" />
+      <van-grid-item @click="itemClick" icon="flag-o" text="我的足迹" />
+      <van-grid-item @click="itemClick" icon="photo-o" text="会员福利" />
+      <van-grid-item @click="itemClick" icon="aim" text="地址管理" />
+      <van-grid-item @click="itemClick" icon="warn-o" text="账号安全" />
+      <van-grid-item @click="itemClick" icon="service-o" text="联系客服" />
+      <van-grid-item @click="itemClick" icon="photo-o" text="帮助中心" />
+      <van-grid-item @click="itemClick" icon="smile-comment-o" text="意见反馈" />
     </van-grid>
 
     <transition name="van-fade">
@@ -67,7 +75,6 @@ import {GoLogin} from "@/request/api"
       this.nickName = userInfo.nickname
       this.imgsrc = userInfo.avatar
     }
-    
   },
   methods:{
     // 定义打开登录弹框的方法
@@ -77,12 +84,14 @@ import {GoLogin} from "@/request/api"
         this.isShowLogo = true
       }
     },
-
+    // 图标点击事件
+    itemClick(){
+      this.$toast.fail("功能暂未开放")
+    },
 
 
 
     onSubmit(values) {
-      console.log(values);
       let pwd= values['密码']
       let username= values['用户名']
       GoLogin({username, pwd})

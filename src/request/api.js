@@ -30,7 +30,7 @@ export  const GetSearchInfoData= (params) => $http.get(`/search/helper`,{params}
  * 
  */
 
-// 获取搜索商品的数据方法
+// 获取搜索商品和（根据分类Id获取）首页分类商品列表数据的数据方法
 export  const GetSearchGoodData= (params) => $http.get(`/goods/list`,{params}) 
 
 
@@ -76,4 +76,18 @@ export const GetCategoryList = ()=>$http.get("/catalog/index")
 
 // 获取当前分类页面数据方法
 export const GetCurrentCategoryList = params =>$http.get("/catalog/current",{params})
+
+// 获取专题页面数据方法
+export const GetTopicList = params =>$http.get("/topic/list",{params})
+
+
+// 获取首页分类数据
+export const GetHomeCategoryListData = params =>$http.get("/goods/category",{params})
+
+
+// 获取分类页面商品列表数据
+export const GetHomeCategoryGoodsList = params =>$http.get("/goods/list",{params})
+
+
+
 

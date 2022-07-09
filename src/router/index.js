@@ -68,6 +68,15 @@ const routes = [
     ]
   },
   {
+    // 
+    path:'/categoryChannel',
+    name:"categoryChannel",
+    meta:{
+      tabIsShow:false
+    },
+    component: ()=> import('../views/HomeCategory.vue'),
+  },
+  {
     path: '/cart',  // 也可以采用这种写法   path: '/home/searchPopup',  跳转时的路由一定要正确：$router.push('/home/searchPopup')"
     name: 'cart',
     meta:{  // 路由源信息

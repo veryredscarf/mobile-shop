@@ -1,9 +1,21 @@
 <template>
   <div>
+
+
+
+
+<van-row>
+  <van-col span="2">
+    <van-icon name="arrow-left" @click="goBack" />
+  </van-col>
+  <van-col span="22">
     <van-tabs v-model="goodId" @click="tabClick">
       <van-tab v-for="item in categoryList" :title="item.name" :key="item.id" >
       </van-tab>
     </van-tabs>
+  </van-col>
+
+</van-row>
 
     <div class="home-category-title">
       <h3>{{currentCateInfo.name}}</h3>
@@ -113,6 +125,10 @@ export default {
           this.categoryListData = goodsList
         })
       })
+    },
+    // 返回箭头点击事件
+    goBack(){
+      this.$router.push('./home')
     }
 
   }
@@ -129,5 +145,14 @@ export default {
       font-size: .18rem;
       color: black;
     }
+  }
+  .van-col--2{
+        // width: 8.33333333%;
+    /* height: 100%; */
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    font-size: 26px;
+    background-color: white;
   }
 </style>

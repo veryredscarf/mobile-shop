@@ -4,7 +4,7 @@
 
   <div class="container">
     <van-sidebar v-model="activeKey"  @change="siderItemChange">
-      <van-sidebar-item :title="item.name" v-for="item in categoryList" :key="item.id"   />
+      <van-sidebar-item :title="item.name" v-for="item in categoryList" :key="item.id"  />
     </van-sidebar>
     <div class="content">
       <CategoryContent :currentCategoryInfo = "currentCategoryInfo"></CategoryContent>
@@ -53,7 +53,8 @@ export default {
       .then(res=>{
         this.currentCategoryInfo = res.data.currentCategory
       })
-    }
+    },
+
   },
   created(){
     GetCategoryList()

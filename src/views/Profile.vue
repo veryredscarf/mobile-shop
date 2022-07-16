@@ -30,21 +30,48 @@
       <div class="logo-model" v-show="isShowLogo"  >
         <div class="close-model" @click="isShowLogo = false" ></div>
         <van-form @submit="onSubmit" class="logo-form">
-          <van-field
-            v-model="username"
-            name="用户名"
-            label="用户名"
-            placeholder="用户名"
-            :rules="[{ required: true, message: '请填写用户名' }]"
+
+
+
+
+
+
+          <!-- <van-row style="background-color:white;height: auto;" justify="space-between" align="center">
+            <van-col span="18"> -->
+              <van-field
+                v-model="username"
+                name="手机号"
+                label="手机号"
+                placeholder="请输入手机号"
+                :rules="[{ required: true, message: '请填写用户手机号' }]"
           />
-          <van-field
-            v-model="password"
-            type="password"
-            name="密码"
-            label="密码"
-            placeholder="密码"
-            :rules="[{ required: true, message: '请填写密码' }]"
-          />
+            <!-- </van-col>
+            <van-col span="6">
+              <van-button round type="default" :disabled= 'isBtn' >验证码</van-button>
+            </van-col>
+          </van-row> -->
+
+
+
+
+         <van-row style="background-color:white;height: auto;" justify="space-between" align="center">
+            <van-col span="18">
+              <van-field
+                v-model="password"
+                type="password"
+                name="验证码"
+                label="验证码"
+                placeholder="请输入验证码"
+                :rules="[{ required: true, message: '请填写验证码' }]"
+              />
+            </van-col>
+            <van-col span="6">
+              <van-button round type="default" :disabled= 'isBtn' >验证码</van-button>
+            </van-col>
+          </van-row>
+
+
+
           <div style="margin: 16px;">
             <van-button round block type="info" native-type="submit">提交</van-button>
           </div>
@@ -62,7 +89,9 @@ import {GoLogin} from "@/request/api"
       username: '',
       password: '',
       isShowLogo:false,
-      nickName:'点击登录'
+      nickName:'点击登录',
+      // 发送验证码按钮是否可用
+      isBtn:false
     };
     
   },
@@ -92,20 +121,22 @@ import {GoLogin} from "@/request/api"
 
 
     onSubmit(values) {
-      let pwd= values['密码']
-      let username= values['用户名']
-      GoLogin({username, pwd})
-      .then(res=>{
-        console.log(res);
-        // 由于后端的问题，没有注册这一功能，因此许多人登录之后，后端保存信息，后续有人用同样的账号密码等会会根据信息进行报错 ，那就再随机输入账号密码就可以
-        // 登录成功之后，完成事件
-        // 1.提示用户操作成功2.存储token,用户信息，3，1s后关闭弹框，4，把拿到的数据信息填写到页面上
-        this.$toast.success("登录成功")
-        localStorage.setItem("token",res.data.token)
-        localStorage.setItem("userInfo",JSON.stringify(res.data.userInfo))
-        setTimeout(()=>{
-          this.isShowLogo = false
-        },1000)
+      let pwd= values['手机号']
+      let username= values['验证码']
+      console.log(pwd,username);
+
+      // GoLogin({username, pwd})
+      // .then(res=>{
+      //   console.log(res);
+      //   // 由于后端的问题，没有注册这一功能，因此许多人登录之后，后端保存信息，后续有人用同样的账号密码等会会根据信息进行报错 ，那就再随机输入账号密码就可以
+      //   // 登录成功之后，完成事件
+      //   // 1.提示用户操作成功2.存储token,用户信息，3，1s后关闭弹框，4，把拿到的数据信息填写到页面上
+      //   this.$toast.success("登录成功")
+      //   localStorage.setItem("token",res.data.token)
+      //   localStorage.setItem("userInfo",JSON.stringify(res.data.userInfo))
+      //   setTimeout(()=>{
+      //     this.isShowLogo = false
+      //   },1000)
 
         // 如果是直接用函数传统的定时器，则需要设置保存this，箭头函数中没有this指向性
         // let _this = this
@@ -118,7 +149,7 @@ import {GoLogin} from "@/request/api"
 
 
 
-      })
+      // })
     },
   }
 }
@@ -141,7 +172,7 @@ import {GoLogin} from "@/request/api"
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 0.2rem;
+    border-radius: 0.23rem;
     overflow: hidden;
   }
   .close-model{
@@ -169,6 +200,11 @@ import {GoLogin} from "@/request/api"
   .van-col--4{
     padding-right: 20px;
     text-align: right;
+  }
+  .van-button{
+    display: inline-block;
+    width: 100%;
+    border: none;
   }
 }
 </style>

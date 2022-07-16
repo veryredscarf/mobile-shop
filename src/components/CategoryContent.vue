@@ -19,20 +19,34 @@
     </van-divider>
 
     <van-grid :column-num="3" square >
-      <van-grid-item   v-for="value in currentCategoryInfo.subCategoryList" :key="value.id" :icon="value.wap_banner_url" :text="value.name" >
+      <van-grid-item   v-for="value in currentCategoryInfo.subCategoryList" 
+        :key="value.id" 
+        :icon="value.wap_banner_url" 
+        :text="value.name"
+        @click="itemClick(value.id)" 
+        >
       </van-grid-item>
       
     </van-grid>
   </div>
 </template>
 <script>
+import {GetCurrentCategoryList} from "../request/api"
 export default {
   data(){
     return {
       
     }
   },
-  props:["currentCategoryInfo"]
+  props:["currentCategoryInfo"],
+  methods:{
+    itemClick(id){
+      console.log(id);
+      GetCurrentCategoryList({id}).then(res=>{
+        console.log(res);
+      })
+    }
+  }
 }
 </script>
 

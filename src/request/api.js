@@ -88,6 +88,6 @@ export const GetHomeCategoryListData = params =>$http.get("/goods/category",{par
 // 获取分类页面商品列表数据
 export const GetHomeCategoryGoodsList = params =>$http.get("/goods/list",{params})
 
-
+// 设置登录接口，改为手机号的接口
 
 

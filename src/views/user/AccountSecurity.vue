@@ -35,18 +35,20 @@
     v-model="show"
     round
     position="bottom"
-    :style="{ height: '30%' }"
+    :style="{ height: '40%',backgroundColor:'#efefef' }"
+    
   >
   <ul class="popupContainer">
-    <li><van-icon name="friends-o" /></li>
-    <li><van-icon name="friends-o" /></li>
-    <li><van-icon name="friends-o" /></li>
-    <li><van-icon name="friends-o" /></li>
-    <li><van-icon name="friends-o" /></li>
-    <li><van-icon name="friends-o" /></li>
-    <li><van-icon name="friends-o" /></li>
-    <li><van-icon name="friends-o" /></li>
+    <li><div class="list"> <van-icon name="friends-o" /></div><span>一起逛</span></li>
+    <li><div class="list"> <van-icon name="comment-o" /></div><span>消息</span></li>
+    <li><div class="list"> <van-icon name="friends-o" /></div><span>返回首页</span></li>
+    <li><div class="list"> <van-icon name="friends-o" /></div><span>购物车</span></li>
+    <li><div class="list"> <van-icon name="friends-o" /></div><span>我的xx</span></li>
+    <li><div class="list"> <van-icon name="friends-o" /></div><span>意见反馈</span></li>
+    <li><div class="list"> <van-icon name="friends-o" /></div><span>举报</span></li>
+    <i style="width:67px;height:0 "></i>
   </ul>
+  <button class="popupBtn" @click="show = false">取消</button>
   </van-popup>
 
   </div>
@@ -105,15 +107,42 @@ export default {
 .popupContainer{
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+  padding:15px 15px 5px 15px;
 }
 .popupContainer li{
   width: 66px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.popupContainer .list{
+  width: 66px;
   height: 66px;
   border-radius: 50%;
-  border: 1px solid red;
-  text-align: center;
+  border: 1px solid #efefef;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
 .popupContainer li i{
-  
+  font-size: 40px;
+}
+.popupContainer li span{
+  margin-top: 5px;
+}
+.popupBtn{
+  display: inline-block;
+  background-color: white;
+  font-size: 18px;
+  width: 100%;
+  height: 40px;
+  border-radius: 16px;
+  border: none;
 }
 </style>

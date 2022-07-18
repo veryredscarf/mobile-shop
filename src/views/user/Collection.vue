@@ -13,6 +13,9 @@ export default {
 
 <style>
 .collect{
+  position: absolute;
+  top: 0;
+  height: 0;
   width: 100vw;
   height: 100vh;
   background-color: aqua;

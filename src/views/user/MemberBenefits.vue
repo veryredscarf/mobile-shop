@@ -1,5 +1,5 @@
 <template>
-  <div>会员福利</div>
+  <div class="memberBenefits">会员福利</div>
 </template>
 <script>
 export default {
@@ -11,6 +11,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.memberBenefits{
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: aqua;
+}
 </style>

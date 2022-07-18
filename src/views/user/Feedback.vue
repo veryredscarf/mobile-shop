@@ -1,5 +1,5 @@
 <template>
-  <div>意见反馈</div>
+  <div class="feedback">意见反馈</div>
 </template>
 <script>
 export default {
@@ -11,6 +11,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.feedback{
+    position: absolute;
+  top: 0;
+  height: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: aqua;
+}
 </style>

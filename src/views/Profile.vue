@@ -1,5 +1,6 @@
 <template>
   <div>
+
       <van-row type="flex"  align="center" justify="space-between" > 
         <van-col span="8">
           <img class="profileImg" :src="imgsrc" alt="头像" >
@@ -10,31 +11,18 @@
         </van-col>
       </van-row>
 
-
     <van-grid :column-num="3" square>
       
-      <van-grid-item @click="itemClick" icon="label-o" text="订单" />
-      <van-grid-item @click="itemClick" icon="bill-o" text="优惠券" />
-      <van-grid-item @click="itemClick" icon="goods-collect-o" text="礼品卡" />
-      <van-grid-item @click="itemClick" icon="location-o" text="我的收藏" />
-      <van-grid-item @click="itemClick" icon="flag-o" text="我的足迹" />
-      <van-grid-item @click="itemClick" icon="photo-o" text="会员福利" />
-      <van-grid-item @click="itemClick" icon="aim" text="地址管理" />
-      <van-grid-item @click="itemClick" icon="warn-o" text="账号安全" />
-      <van-grid-item @click="itemClick" icon="service-o" text="联系客服" />
-      <van-grid-item @click="itemClick" icon="photo-o" text="帮助中心" />
-      <van-grid-item @click="itemClick" icon="smile-comment-o" text="意见反馈" />
+      <van-grid-item v-for="(item,index) in itemInfo" :key="index" @click="itemClick(item.path)" :icon="item.icon" :text="item.text" />
+
     </van-grid>
+    <router-view> </router-view>
+        
 
     <transition name="van-fade">
       <div class="logo-model" v-show="isShowLogo"  >
         <div class="close-model" @click="isShowLogo = false" ></div>
         <van-form @submit="onSubmit" class="logo-form">
-
-
-
-
-
 
           <!-- <van-row style="background-color:white;height: auto;" justify="space-between" align="center">
             <van-col span="18"> -->
@@ -78,6 +66,7 @@
         </van-form>
       </div>
     </transition>
+
   </div>
 </template>
 <script>
@@ -91,7 +80,66 @@ import {GoLogin} from "@/request/api"
       isShowLogo:false,
       nickName:'点击登录',
       // 发送验证码按钮是否可用
-      isBtn:false
+      isBtn:false,
+      // item单元格信息
+      itemInfo:[
+        {
+          icon:"label-o",
+          text:"订单",
+          path:"/profile/orderMangement"
+        },
+        {
+          icon:"bill-o",
+          text:"优惠券",
+          path:"/profile/couponMangement"
+        },
+        {
+          icon:"goods-collect-o",
+          text:"礼品卡",
+          path:"/profile/giftCardd"
+        },
+        {
+          icon:"location-o",
+          text:"我的收藏",
+          path:"/profile/collection"
+        },
+        {
+          icon:"flag-o",
+          text:"我的足迹",
+          path:"/profile/myFootPrint"
+        },
+        {
+          icon:"photo-o",
+          text:"会员福利",
+          path:"/profile/memberBenfits"
+        },
+        {
+          icon:"aim",
+          text:"地址管理",
+          path:"/profile/adressMangement"
+        },
+        {
+          icon:"warn-o",
+          text:"账号安全",
+          path:"/profile/accountSecurity"
+        },
+        {
+          icon:"label-o",
+          text:"联系客服",
+          path:"/profile/contactCustomerService"
+        },
+        {
+          icon:"photo-o",
+          text:"帮助中心",
+          path:"/profile/helpCenter"
+        },
+        {
+          icon:"smile-comment-o",
+          text:"意见反馈",
+          path:"/profile/feedBack"
+        },
+
+      ]
     };
     
   },
@@ -114,8 +162,9 @@ import {GoLogin} from "@/request/api"
       }
     },
     // 图标点击事件
-    itemClick(){
-      this.$toast.fail("功能暂未开放")
+    itemClick(path){
+      // this.$toast.fail("功能暂未开放")
+      this.$router.push(path)
     },
 
 

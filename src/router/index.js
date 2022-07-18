@@ -86,16 +86,74 @@ const routes = [
     component: ()=> import('../views/Cart.vue'),
   },
   {
-    path: '/profile',  // 也可以采用这种写法   path: '/home/searchPopup',  跳转时的路由一定要正确：$router.push('/home/searchPopup')"
+    path: '/profile',  
     name: 'profile',
     meta:{  // 路由源信息
       activeNum:4,
       tabIsShow:true
     },
     component: ()=> import('../views/Profile.vue'),
+    children:[
+      {
+        path:"collection",
+        name:"collection",
+        component:()=> import("../views/user/Collection.vue")
+      },
+      {
+        path:"orderMangement",
+        name:"orderMangement",
+        component:()=> import("../views/user/OrderManagement.vue")
+      },
+      {
+        path:"couponMangement",
+        name:"couponMangement",
+        component:()=> import("../views/user/Coupon.vue")
+      },
+      {
+        path:"giftCardd",
+        name:"giftCardd",
+        component:()=> import("../views/user/GiftCard.vue")
+      },
+      {
+        path:"myFootPrint",
+        name:"myFootPrint",
+        component:()=> import("../views/user/MyFootprint.vue")
+      },
+      {
+        path:"memberBenfits",
+        name:"memberBenfits",
+        component:()=> import("../views/user/MemberBenefits.vue")
+      },
+      {
+        path:"adressMangement",
+        name:"adressMangement",
+        component:()=> import("../views/user/AddressManagement.vue")
+      },
+      {
+        path:"accountSecurity",
+        name:"accountSecurity",
+        component:()=> import("../views/user/AccountSecurity.vue")
+      },
+      {
+        path:"contactCustomerService",
+        name:"contactCustomerService",
+        component:()=> import("../views/user/ContactCustomerService.vue")
+      },
+      {
+        path:"helpCenter",
+        name:"helpCenter",
+        component:()=> import("../views/user/HelpCenter.vue")
+      },
+      {
+        path:"feedBack",
+        name:"feedBack",
+        component:()=> import("../views/user/Feedback.vue")
+      },
+      
+    ]
   },
   {
-    path: '/goodDetail',  // 也可以采用这种写法   path: '/home/searchPopup',  跳转时的路由一定要正确：$router.push('/home/searchPopup')"
+    path: 'goodDetail',  // 也可以采用这种写法   path: '/home/searchPopup',  跳转时的路由一定要正确：$router.push('/home/searchPopup')"
     name: 'goodDetail',
     component: ()=> import('../views/ProductDetail.vue'),
     meta:{

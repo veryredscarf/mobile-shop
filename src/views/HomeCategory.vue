@@ -1,9 +1,5 @@
 <template>
   <div>
-
-
-
-
 <van-row>
   <van-col span="2">
     <van-icon name="arrow-left" @click="goBack" />

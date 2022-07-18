@@ -71,9 +71,6 @@
 
 
 
-
-
-
   </div>
 </template>
 <script>
@@ -116,9 +113,6 @@ export default {
       // 定义加入购物车数据信息,在往后端发送处理加入购物车的请求中需要
       productList:[]
 
-
-
-
     }
   },
   components:{
@@ -126,10 +120,54 @@ export default {
     product,
     AppGoodCart
   },
+  watch:{
+    $route:'initData'
+  },
 
   created(){
-    // 获取路由携带的参数，并且根据参数像后端发送请求数据
-    let id = this.$route.query
+    this.initData()
+   
+    // // 获取路由携带的参数，并且根据参数像后端发送请求数据
+    // let id = this.$route.query
+    // console.log(id);
+    // GetGoodInfo(id)
+    // .then(res=>{
+    //   this.images = res.data.gallery
+    //   console.log(res);
+    //   let {info,attribute,issue,productList} = res.data  // 采用es6的语法来解构对象
+    //   this.info = info
+    //   this.attribute = attribute
+    //   this.goods_desc = info.goods_desc
+    //   this.issue = issue
+    //   this.productList = productList
+    //   // 把获取到商品数据添加给sku数据中
+    //   this.goods.picture = info.list_pic_url
+    //   this.sku.price = info.retail_price
+    //   this.sku.stock_num = info.goods_number
+    // })
+    // // 获取相关产品的方法
+    // GetRelatedGoodInfo(id)
+    // .then(res=>{
+    //   this.goodsList = res.data.goodsList
+    // })
+
+    // // 获取购物车商品总数量的方法
+    // GetCartInfo()
+    // .then(res=>{
+    //   console.log(res);
+    //   this.cartGoodsCount = res.data.cartTotal.goodsCount
+    // })
+
+  },
+
+  methods:{
+    // 封装获取数据方法
+    initData(){
+      console.log("wakkakkakak");
+          // 获取路由携带的参数，并且根据参数像后端发送请求数据
+    let ids = this.$route.query.id
+    let id = {id:ids}
+    
     GetGoodInfo(id)
     .then(res=>{
       this.images = res.data.gallery
@@ -139,19 +177,13 @@ export default {
       this.attribute = attribute
       this.goods_desc = info.goods_desc
       this.issue = issue
-
       this.productList = productList
-
-
       // 把获取到商品数据添加给sku数据中
       this.goods.picture = info.list_pic_url
       this.sku.price = info.retail_price
       this.sku.stock_num = info.goods_number
-
-
     })
-
-// 获取相关产品的方法
+    // 获取相关产品的方法
     GetRelatedGoodInfo(id)
     .then(res=>{
       this.goodsList = res.data.goodsList
@@ -163,10 +195,7 @@ export default {
       console.log(res);
       this.cartGoodsCount = res.data.cartTotal.goodsCount
     })
-
-  },
-
-  methods:{
+    },
    
     // 监听来自子组件传来的数据值
     listenHandleCartClick(){
@@ -192,14 +221,12 @@ export default {
           setTimeout(()=>{
             this.$router.push("/cart")
           },1000)
-
         })
-
-
       }else{
         this.isSkuShow = true
       }
-    }
+    },
+
   }
 }
 </script>

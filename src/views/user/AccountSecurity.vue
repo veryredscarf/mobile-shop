@@ -113,5 +113,7 @@ export default {
   border: 1px solid red;
   text-align: center;
 }
-
+.popupContainer li i{
+  
+}
 </style>

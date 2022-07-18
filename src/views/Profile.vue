@@ -167,25 +167,23 @@ import {GoLogin} from "@/request/api"
       this.$router.push(path)
     },
 
-
-
     onSubmit(values) {
       let pwd= values['手机号']
       let username= values['验证码']
       console.log(pwd,username);
 
-      // GoLogin({username, pwd})
-      // .then(res=>{
-      //   console.log(res);
-      //   // 由于后端的问题，没有注册这一功能，因此许多人登录之后，后端保存信息，后续有人用同样的账号密码等会会根据信息进行报错 ，那就再随机输入账号密码就可以
-      //   // 登录成功之后，完成事件
-      //   // 1.提示用户操作成功2.存储token,用户信息，3，1s后关闭弹框，4，把拿到的数据信息填写到页面上
-      //   this.$toast.success("登录成功")
-      //   localStorage.setItem("token",res.data.token)
-      //   localStorage.setItem("userInfo",JSON.stringify(res.data.userInfo))
-      //   setTimeout(()=>{
-      //     this.isShowLogo = false
-      //   },1000)
+      GoLogin({username, pwd})
+      .then(res=>{
+        console.log(res);
+        // 由于后端的问题，没有注册这一功能，因此许多人登录之后，后端保存信息，后续有人用同样的账号密码等会会根据信息进行报错 ，那就再随机输入账号密码就可以
+        // 登录成功之后，完成事件
+        // 1.提示用户操作成功2.存储token,用户信息，3，1s后关闭弹框，4，把拿到的数据信息填写到页面上
+        this.$toast.success("登录成功")
+        localStorage.setItem("token",res.data.token)
+        localStorage.setItem("userInfo",JSON.stringify(res.data.userInfo))
+        setTimeout(()=>{
+          this.isShowLogo = false
+        },1000)
 
         // 如果是直接用函数传统的定时器，则需要设置保存this，箭头函数中没有this指向性
         // let _this = this
@@ -195,10 +193,7 @@ import {GoLogin} from "@/request/api"
 
       this.nickName =res.data.userInfo.nickname
       this.imgsrc = res.data.userInfo.avatar
-
-
-
-      // })
+      })
     },
   }
 }

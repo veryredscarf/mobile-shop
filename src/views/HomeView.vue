@@ -33,7 +33,7 @@
     <div class="brandRecommendation">
       <h1>周一到周四，新品首发</h1>
       <ul class="newProduct_class band_class">
-        <li v-for="item in newProductLanuch" :key="item.id">
+        <li v-for="item in newProductLanuch" :key="item.id" @click="brandRecommendationClick(item.id)">
           <img :src="item.list_pic_url" alt="" width="100%">
             <h4>{{item.name}}</h4>
             <p>{{item.retail_price|changeRMB}}</p>
@@ -49,6 +49,7 @@
         :desc="item.goods_brief"
         :title="item.name"
         :thumb="item.list_pic_url"
+        @click="brandRecommendationClick(item.id)"
       />
     </div>
 
@@ -127,8 +128,6 @@ export default {
       this.hotGoodsList = hotGoodsList
       this.topicList = topicList
       this.categoryGoodsList = categoryList
-
-    
     })
 
   },
@@ -141,6 +140,10 @@ export default {
     homeCategoryClick(id){
       console.log(id);
       this.$router.push(`/categoryChannel?channelId=${id}`)
+    },
+    // 周一到周四，item元素点击事件
+    brandRecommendationClick(id){
+      this.$router.push(`/goodDetail?id=${id}`)
     }
   }
 }

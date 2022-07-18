@@ -153,7 +153,7 @@ const routes = [
     ]
   },
   {
-    path: 'goodDetail',  // 也可以采用这种写法   path: '/home/searchPopup',  跳转时的路由一定要正确：$router.push('/home/searchPopup')"
+    path: '/goodDetail',  // 也可以采用这种写法   path: '/home/searchPopup',  跳转时的路由一定要正确：$router.push('/home/searchPopup')"
     name: 'goodDetail',
     component: ()=> import('../views/ProductDetail.vue'),
     meta:{

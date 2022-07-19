@@ -176,7 +176,7 @@ const router = new VueRouter({
 
 // 前置路由守卫 ，
 router.beforeEach((to,from,next) =>{
-  let token = localStorage.getItem("token")
+  let token = localStorage.getItem("userInfo")
   if(to.path=="/cart"){
     if(token){
       next()

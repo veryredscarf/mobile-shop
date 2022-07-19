@@ -18,18 +18,18 @@ intsance.interceptors.request.use(config =>{
   // 我们需要根据不同的请求地址来判断是否需要进行拦截
 
 switch (config.url) {
-  case "/cart/index" :
-    checkToken()
-  case "/cart/add" :
-    checkToken()
-  case "/cart/goodscount" :
-    checkToken()
-  case "/cart/checked" :
-    checkToken()
-  case "/cart/update" :
-    checkToken()
-  case "/cart/delete" :
-    checkToken()
+  // case "/cart/index" :
+  //   checkToken()
+  // case "/cart/add" :
+  //   checkToken()
+  // case "/cart/goodscount" :
+  //   return config
+  // case "/cart/checked" :
+  //   return config
+  // case "/cart/update" :
+  //   return config
+  // case "/cart/delete" :
+  //   return config
   default:
     return config
 }

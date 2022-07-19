@@ -8,7 +8,7 @@ import 'reset-css'   // 安装全局自动清除样式
 
 import { Button,Stepper,Search,SwipeItem,Swipe,Lazyload,Icon,Tag,List,Cell, DropdownMenu, DropdownItem,Empty,Toast, Tabbar, TabbarItem,
 Col, Row,Grid, GridItem,Form,Field,Divider,GoodsAction, GoodsActionIcon, GoodsActionButton,Sku, Checkbox, CheckboxGroup,Card,SubmitBar,
-SwipeCell,Sidebar, SidebarItem,Image as VanImage,Loading,Pagination,Tab, Tabs,NavBar,Popup,ShareSheet
+SwipeCell,Sidebar, SidebarItem,Image as VanImage,Loading,Pagination,Tab, Tabs,NavBar,Popup,ShareSheet,AddressList,AddressEdit,Area
 } from 'vant';
 
 
@@ -21,6 +21,10 @@ Vue.filter("changeRMB",val=>{    // changeRMB表示过滤器名字
   return `￥${Number(val).toFixed(2)}元` // 保存两位小数
 })
 
+
+Vue.use(Area);
+Vue.use(AddressEdit);
+Vue.use(AddressList);
 
 Vue.use(ShareSheet);
 Vue.use(Popup);

@@ -63,3 +63,10 @@ http://520it.com:8001/
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### vant2 中使用地址编辑组件时，引入官网上的ui组件之后，运行时报错
+1. 报错内容：[Vue warn]: Error in data(): "ReferenceError: areaList is not defined"
+2. 报错原因：该错误是因为vant虽然有自己的默认地址列表areaList,但它没有在vant中,npm install vant时不会附带下载该地址列表,需要自己手动下载省市区数据:
+3. 解决办法：npm i @vant/area-data -D
+4. 使用时在需要引入的页面引入  import { areaList } from '@vant/area-data';

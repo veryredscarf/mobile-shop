@@ -79,7 +79,6 @@ export default {
 }
 .van-nav-bar{
   background-color: #efefef;
-  
 }
 .van-cell--clickable{
   border: 1px solid #BBBBBB ;
